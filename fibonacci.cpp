@@ -1,42 +1,51 @@
-#include <iostream>  // Standard library for input/output
+#include <iostream>
+#include <chrono>  // Include the chrono library for runtime calculation
 using namespace std;
+using namespace std::chrono;
 
-// Function to calculate the nth Fibonacci number using recursion
-// The Fibonacci sequence starts with 0 and 1, and each subsequent number is the sum of the previous two.
-// e.g., Fibonacci(5) = Fibonacci(4) + Fibonacci(3), where Fibonacci(4) = 3 and Fibonacci(3) = 2, so Fibonacci(5) = 5
-int fibonacci(int n) {
-    // Base case: the first Fibonacci number is 0, and the second is 1
-    if (n == 0) {
-        return 0;  // Fibonacci(0) is 0
-    } else if (n == 1) {
-        return 1;  // Fibonacci(1) is 1
-    } else {
-        // Recursive case: Fibonacci(n) = Fibonacci(n - 1) + Fibonacci(n - 2)
-        return fibonacci(n - 1) + fibonacci(n - 2);
-    }
-}
+// Function to generate Fibonacci series up to 'n' terms
+void fibonacci(int n) {
+    // Initialize the first two terms of the Fibonacci series
+    int t1 = 0;  // First term of the series
+    int t2 = 1;  // Second term of the series
+    int nextTerm = 0;  // Variable to store the next term in the series
 
-// Function to display the Fibonacci series up to the nth term
-void fibonacciSeries(int n) {
-    cout << "Fibonacci series up to the " << n << "th term: ";
-    for (int i = 0; i < n; i++) {
-        cout << fibonacci(i) << " ";  // Call fibonacci for each term
+    // Print the first two terms of the series
+    cout << t1 << ", " << t2 << ", ";
+
+    // Loop to calculate the next terms in the series from the 3rd term onwards
+    for (int i = 3; i <= n; ++i) {
+        // Calculate the next term in the series as the sum of the previous two terms
+        nextTerm = t1 + t2;  
+        
+        // Print the next term in the series
+        cout << nextTerm << ", ";  
+        
+        // Update the previous terms for the next iteration
+        t1 = t2;  // Update t1 to the value of t2
+        t2 = nextTerm;  // Update t2 to the value of nextTerm
     }
-    cout << endl;
 }
 
 int main() {
-    int num;
+    int n;  // Variable to store the number of terms in the Fibonacci series
+    
+    // Prompt the user to enter the number of terms
+    cout << "Enter the number of terms: ";  
+    cin >> n;  // Read the number of terms from the user
 
-    // Ask user for the number of terms in the Fibonacci series
-    cout << "Enter the number of terms in Fibonacci series: ";
-    cin >> num;
+    // Measure the start time of the Fibonacci calculation
+    auto start = high_resolution_clock::now();
 
-    if (num < 0) {
-        cout << "Please enter a non-negative number.\n";  // Handle negative input
-    } else {
-        fibonacciSeries(num);  // Display Fibonacci series
-    }
+    cout << "Fibonacci Series: ";  // Print a label for the Fibonacci series
+    fibonacci(n);  // Call the fibonacci function to generate the series
 
-    return 0;  // End of the program
+    // Measure the end time of the Fibonacci calculation
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);  // Calculate the duration in microseconds
+
+    // Print the runtime of the Fibonacci calculation
+    cout << "\nRuntime: " << duration.count() << " microseconds" << endl;
+
+    return 0;  // Indicate that the program ended successfully
 }
