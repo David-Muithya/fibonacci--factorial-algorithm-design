@@ -16,7 +16,7 @@ Asks the user to input a non-negative number.
 If the number is negative, it outputs an error message.
 Otherwise, it computes the factorial and displays the result.
 
-# fabonacci.cpp
+# fibonacci.cpp
  Detailed Explanation:
  Function fibonacci(int n):
 This function calculates the nth Fibonacci number recursively.
